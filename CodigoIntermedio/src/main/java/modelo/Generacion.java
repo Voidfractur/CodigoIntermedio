@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -15,10 +16,16 @@ public class Generacion {
 
     private String funcionInfija;
     private String funcionPostfija;
+    private ArrayList<String> listaTercetos;
+    private ArrayList<String> listaTriplos;
+    private ArrayList<String> listaCuadruplos;
 
     public Generacion(String funcionInfija) {
         this.funcionInfija = funcionInfija;
         funcionPostfija = "";
+        listaTercetos = new ArrayList<>();
+        listaTriplos = new ArrayList<>();
+        listaCuadruplos = new ArrayList<>();
     }
 
     public void generarPostFija(String infija) {
@@ -80,6 +87,52 @@ public class Generacion {
             }
         }
     }
+    public void generarTercetos(){
+        Stack<String> pila = new Stack<>();
+        int numTercetos = 1;
+        for (int i = 0; i < funcionPostfija.length(); i++) {
+            pila.push(Character.toString(funcionPostfija.charAt(i)));
+            if (esSimbolo(funcionPostfija.charAt(i))) {
+                String signo = pila.pop();
+                String num2 = pila.pop();
+                String num1 = pila.pop();
+                listaTercetos.add("T"+numTercetos+"="+num1+signo+num2);
+                pila.push("T"+numTercetos);
+                numTercetos++;
+            }
+        }
+    }
+    
+        public void generarTriplos(){
+        Stack<String> pila = new Stack<>();
+       
+        for (int i = 0; i < funcionPostfija.length(); i++) {
+            pila.push(Character.toString(funcionPostfija.charAt(i)));
+            if (esSimbolo(funcionPostfija.charAt(i))) {
+                String signo = pila.pop();
+                String num2 = pila.pop();
+                String num1 = pila.pop();
+                listaTriplos.add("( "+signo+" , "+num1+" , "+num2+" ) ");
+                pila.push(" ");
+              
+            }
+        }
+    }
+    public void generarCuadroplos(){
+        Stack<String> pila = new Stack<>();
+        int numTercetos = 1;
+        for (int i = 0; i < funcionPostfija.length(); i++) {
+            pila.push(Character.toString(funcionPostfija.charAt(i)));
+            if (esSimbolo(funcionPostfija.charAt(i))) {
+                String signo = pila.pop();
+                String num2 = pila.pop();
+                String num1 = pila.pop();
+                listaCuadruplos.add("( "+signo+" , "+num1+" , "+num2+" , "+"T"+numTercetos+" )");
+                pila.push("T"+numTercetos);
+                numTercetos++;
+            }
+        }
+    }        
 
     public boolean esNumero(String text) {
         if (text.matches("[0-9]+")) {
@@ -149,6 +202,30 @@ public class Generacion {
 
     public void setFuncionPostfija(String funcionPostfija) {
         this.funcionPostfija = funcionPostfija;
+    }
+
+    public ArrayList<String> getListaTercetos() {
+        return listaTercetos;
+    }
+
+    public void setListaTercetos(ArrayList<String> listaTercetos) {
+        this.listaTercetos = listaTercetos;
+    }
+
+    public ArrayList<String> getListaTriplos() {
+        return listaTriplos;
+    }
+
+    public void setListaTriplos(ArrayList<String> listaTriplos) {
+        this.listaTriplos = listaTriplos;
+    }
+
+    public ArrayList<String> getListaCuadruplos() {
+        return listaCuadruplos;
+    }
+
+    public void setListaCuadruplos(ArrayList<String> listaCuadruplos) {
+        this.listaCuadruplos = listaCuadruplos;
     }
 
 }
