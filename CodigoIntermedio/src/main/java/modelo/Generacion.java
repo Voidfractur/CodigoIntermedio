@@ -31,7 +31,7 @@ public class Generacion {
     public void generarPostFija(String infija) {
         Stack<String> pila = new Stack<>();
         for (int i = 0; i < infija.length(); i++) {
-            if (esNumero(Character.toString(infija.charAt(i)))) {
+            if (esNumero(Character.toString(infija.charAt(i))) || Character.isLetter(infija.charAt(i))) {
                 funcionPostfija += infija.charAt(i);
             }
             if (esSimbolo(infija.charAt(i))) {
